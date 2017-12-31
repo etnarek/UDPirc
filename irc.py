@@ -47,7 +47,6 @@ class ScreenThread(threading.Thread):
                 pass
             finally:
                 curses.update_lines_cols()
-                self.refresh()
 
     def refresh(self):
         self.chat_win.refresh()
