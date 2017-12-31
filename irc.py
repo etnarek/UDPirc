@@ -87,7 +87,7 @@ def main(stdscr):
             screen.join(timeout=0.5)
             break
         else:
-            screen.printline("you", m)
+            #screen.printline("you", m)
             screen.send(m)
 
 
