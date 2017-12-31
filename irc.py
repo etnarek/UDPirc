@@ -22,7 +22,7 @@ class ScreenThread(threading.Thread):
         self.input_win.keypad(1)
 
         self.line = curses.newwin(1, width, begin_y - 1, begin_x)
-        self.line.hline("-", width)
+        self.line.hline(curses.ACS_HLINE, width)
         self.line.refresh()
 
         self._end = False
@@ -32,6 +32,7 @@ class ScreenThread(threading.Thread):
             self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
         self.printlock = threading.Lock()
+        self.refreshlock = threading.Lock()
 
         threading.Thread.__init__ ( self )
 
@@ -48,11 +49,11 @@ class ScreenThread(threading.Thread):
                 pass
             finally:
                 curses.update_lines_cols()
-                self.refresh()
 
     def refresh(self):
-        self.chat_win.refresh()
-        self.input_win.refresh()
+        with self.refreshlock:
+            self.chat_win.refresh()
+            self.input_win.refresh()
 
     def readline(self):
         message = self.input_win.getstr()
