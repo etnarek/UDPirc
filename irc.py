@@ -44,21 +44,28 @@ class ScreenThread(threading.Thread):
                     self.printline(addr[0], data)
             except socket.timeout:
                 pass
+            finally:
+                curses.update_lines_cols()
+                self.refresh()
+
+    def refresh(self):
+        self.chat_win.refresh()
+        self.line.refresh()
+        self.input_win.refresh()
 
     def readline(self):
         message = self.input_win.getstr()
         message = message.strip()
         self.input_win.clear()
-        self.input_win.refresh()
-        self.chat_win.refresh()
+        self.refresh()
         return message
 
     def printline(self, addr, message):
         with self.printlock:
             message = message.decode(errors='ignore').replace("\n", "")
-            m = "<{}> {}\n".format(addr, message)
+            m = "\n<{}> {}".format(addr, message)
             self.chat_win.addstr(m)
-            self.chat_win.refresh()
+            self.refresh()
 
     def stop(self):
         self._end = True
