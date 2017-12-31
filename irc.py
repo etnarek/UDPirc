@@ -58,6 +58,7 @@ class ScreenThread(threading.Thread):
         message = self.input_win.getstr()
         message = message.strip()
         self.input_win.erase()
+        self.refresh()
         return message
 
     def printline(self, addr, message):
