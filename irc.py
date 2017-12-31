@@ -52,14 +52,12 @@ class ScreenThread(threading.Thread):
 
     def refresh(self):
         self.chat_win.refresh()
-        self.line.refresh()
         self.input_win.refresh()
 
     def readline(self):
         message = self.input_win.getstr()
         message = message.strip()
-        self.input_win.clear()
-        self.refresh()
+        self.input_win.erase()
         return message
 
     def printline(self, addr, message):
