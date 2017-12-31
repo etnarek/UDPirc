@@ -18,6 +18,7 @@ class ScreenThread(threading.Thread):
 
         begin_x = 0; begin_y = curses.LINES - 1
         self.input_win = curses.newwin(1, width, begin_y, begin_x)
+        self.input_win.keypad(1)
 
         self.line = curses.newwin(1, width, begin_y - 1, begin_x)
         self.line.hline("-", width)
