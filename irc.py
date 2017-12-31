@@ -21,7 +21,7 @@ class ScreenThread(threading.Thread):
         self.input_win.keypad(1)
 
         self.line = curses.newwin(1, width, begin_y - 1, begin_x)
-        self.line.hline("-", width)
+        self.line.hline(curses.ACS_HLINE, width)
         self.line.refresh()
 
         self._end = False
