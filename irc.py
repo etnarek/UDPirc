@@ -53,7 +53,7 @@ class ScreenThread(threading.Thread):
 
     def printline(self, addr, message):
         with self.printlock:
-            message = message.decode('ascii',errors='ignore').replace("\n", "")
+            message = message.replace("\n", "")
             m = "<{}> {}\n".format(addr, message)
             self.chat_win.addstr(m)
             self.chat_win.refresh()
