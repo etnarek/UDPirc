@@ -26,6 +26,8 @@ class ScreenThread(threading.Thread):
         self._end = False
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        if hasattr(socket,'SO_BROADCAST'):
+            self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
         self.printlock = threading.Lock()
 
@@ -39,7 +41,7 @@ class ScreenThread(threading.Thread):
                 data, addr = self.sock.recvfrom(1024)
                 data = data.strip()
                 if data:
-                    self.printline(addr, data)
+                    self.printline(addr[0], data)
             except socket.timeout:
                 pass
 
@@ -86,6 +88,7 @@ def main(stdscr):
             break
         else:
             screen.printline("you", m)
+            screen.send(m)
 
 
 if __name__ == "__main__":
