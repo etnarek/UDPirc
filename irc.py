@@ -49,6 +49,8 @@ class ScreenThread(threading.Thread):
         message = self.input_win.getstr()
         message = message.strip()
         self.input_win.clear()
+        self.input_win.refresh()
+        self.chat_win.refresh()
         return message
 
     def printline(self, addr, message):
