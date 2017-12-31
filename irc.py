@@ -2,6 +2,7 @@ import curses
 import socket
 import threading
 from time import sleep
+from datetime import datetime
 
 from curses import wrapper
 
@@ -64,8 +65,9 @@ class ScreenThread(threading.Thread):
     def printline(self, addr, message):
         with self.printlock:
             message = message.decode(errors='ignore').replace("\n", "")
-            addr = "<{}>".format(addr).rjust(17)
-            m = "\n{} | {}".format(addr, message)
+            addr = "<{}>".format(addr).ljust(17)
+            timestamp = datetime.now().time().isoformat().split(".")[0]
+            m = "\n {} {} | {}".format(timestamp, addr, message)
             self.chat_win.addstr(m)
             self.refresh()
 
